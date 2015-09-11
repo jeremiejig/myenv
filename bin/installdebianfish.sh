@@ -1,0 +1,154 @@
+#!/bin/sh
+
+set -e
+
+need_version_major=2
+need_version_minor=1
+need_version_rev=0
+
+## DO NOT EDIT BELOW
+gitglobal_path=~/git
+gitohmyfish_path=$gitglobal_path/oh-my-fish
+ohmyfishinstallscript=$gitohmyfish_path/tools/jeremiejig.install.fish
+debianaptfish=/etc/apt/sources.list.d/fish-shell.list
+
+#Color
+clrblack='\e[0;30m'
+clrred='\e[0;31m'
+clrgreen='\e[0;32m'
+clryellow='\e[0;33m'
+clrblue='\e[0;34m'
+clrpurple='\e[0;35m'
+clrcyan='\e[0;36m'
+clrwhite='\e[0;37m'
+clrend='\e[0m'
+
+init (){
+  if which curl 2> /dev/null
+  then
+    downloader='curl -L'
+  elif which wget 2> /dev/null
+  then
+    downloader='wget -O -'
+  else 
+    sudo apt-get install -y curl
+    downloader='curl -L'
+  fi
+}
+
+die (){
+  local status=$?
+  echo $@
+  exit $status
+}
+
+colored (){
+  local color=$1
+  shift
+  case $color in
+    black)
+      echo $clrblack$@$clrend ;;
+    red)
+      echo $clrred$@$clrend ;;
+    green)
+      echo $clrgreen$@$clrend ;;
+    blue)
+      echo $clrblue$@$clrend ;;
+    yellow)
+      echo $clryellow$@$clrend ;;
+    cyan)
+      echo $clrcyan$@$clrend ;;
+    purple)
+      echo $clrpurple$@$clrend ;;
+    *)
+      echo $@
+  esac
+}
+
+is_version_ok () {
+    if [ $need_version_major -le $version_major ]
+    then
+      if [ $need_version_minor -le $version_minor ]
+      then
+	if [ $need_version_rev -le $version_rev ]
+	then
+	  return 0
+	fi
+      fi
+    fi
+    return 1
+}
+
+confirm() {
+  echo -n "Do you want to run $*? [N/y] "
+  read REPLY < /dev/tty
+  if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
+    "$@" < /dev/tty
+  fi 
+}
+
+check_and_install_fish () {
+  which fish > /dev/null && {
+    version=$(fish --version 2>&1 | sed 's/^fish, version //')
+    version_major=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\1/')
+    version_minor=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\2/')
+    version_rev=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\3/')
+
+    is_version_ok
+  } || { install_fish && confirm chsh -s /usr/bin/fish;}
+}
+
+install_fish () {
+  echo "\t\tInstalling fish..."
+  flag_install=0
+  version=$(apt-cache showpkg fish | sed -re '/^Provides:/,+1!d;/Provides/d;s/^([0-9]+\.[0-9]+\.[0-9]+).*$/\1/')
+  version_major=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\1/')
+  version_minor=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\2/')
+  version_rev=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\3/')
+
+  is_version_ok || add_repo_fish
+  sudo apt-get install -y fish
+  echo "\t\tFish installed!"
+}
+
+add_repo_fish () {
+  distrib=$(lsb_release -i|sed -r 's/Distributor ID:\s+//')
+  if [ $distrib = 'LinuxMint' ] || [ $distrib = 'Ubuntu' ]
+  then
+    add_repo_fish_ubuntu
+  elif [ $distrib = 'Debian' ]
+  then
+    debian_version=$(lsb_release -r|sed -r 's/Release:\s+//;s/^([0-9]+).*$/\1/')
+    add_repo_fish_debian
+  else
+    die "your distribution isn't handled yet"
+  fi
+}
+
+add_repo_fish_ubuntu () {
+  which apt-add-repository > /dev/null || sudo apt-get install -y python-software-properties || die
+  sudo apt-add-repository --yes ppa:fish-shell/release-2 || die 
+  sudo apt-get update 
+}
+
+add_repo_fish_debian () {
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key D880C8E4
+  echo "\t\tcreating $debianaptfish"
+  echo "deb http://download.opensuse.org/repositories/shells:/fish:/release:/2/Debian_$debian_version.0/ ./" |sudo tee $debianaptfish > /dev/null
+  sudo apt-get update
+}
+
+check_and_install_git () {
+  which git > /dev/null || { echo "\t\tInstalling git..." && sudo apt-get install -y git && echo "\t\tgit installed!"; }
+  [ -f ~/.gitconfig ] || $downloader http://github.com/jeremiejig/oh-my-fish/raw/jeremiejig/templates/gitconfig > ~/.gitconfig
+}
+
+#colored yellow hey in yellow
+
+init
+check_and_install_fish
+check_and_install_git
+[ -d $gitglobal_path ] || mkdir $gitglobal_path
+[ -d $gitohmyfish_path ] || { echo "\t\tInstalling Oh-my-fish!" && $downloader http://github.com/jeremiejig/oh-my-fish/raw/jeremiejig/tools/jeremiejig.install.fish | fish ; } || 
+[ -f $ohmyfishinstallscript ] && fish || echo "There was an error when trying to launch $ohmyfishinstallscript"
+
