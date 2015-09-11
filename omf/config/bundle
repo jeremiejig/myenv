@@ -1,0 +1,9 @@
+theme default
+theme bobthefish
+package https://github.com/oh-my-fish/plugin-tmux
+package https://github.com/oh-my-fish/plugin-mc
+package gi
+package extract
+package rvm
+package rails
+package bundler
