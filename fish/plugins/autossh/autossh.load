@@ -1,0 +1,20 @@
+
+function __start_ssh_agent --description 'Will start a new ssh_agent, exporting the variable in universal scope.'
+  ssh-agent
+end
+
+#BootStap
+
+#Check any existing preset variable (graphical env)
+if begin; set -gq SSH_AGENT_PID; and not ps -ef | grep $SSH_AGENT_PID | grep ssh-agent > /dev/null; end;
+  set -ge SSH_AGENT_PID
+  set -ge SSH_AUTH_SOCK
+#check any universal env.
+  if begin; set -Uq SSH_AGENT_PID; and not ps -ef | grep $SSH_AGENT_PID | grep ssh-agent > /dev/null; end;
+    set -Ue SSH_AGENT_PID
+    set -Ue SSH_AUTH_SOCK
+    __start_ssh_agent
+  else if not set -Uq SSH_AGENT_PID;
+    __start_ssh_agent
+  end
+end

@@ -1,0 +1,7 @@
+[user]
+	email = me@jeremiejig.fr
+	name = jeremiejig
+[credential]
+	helper = cache
+[color]
+	ui = true
