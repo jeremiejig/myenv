@@ -26,6 +26,7 @@ echo "Peparing local configuration of Oh My Fish..."
 if omf_preinstall; then
 	#Simuling a CI env to avoid the reloading of fish.
 	CI=custominstall
+	export CI
 	$DOWNLOADER github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | sh
 else
 	die "An error occured in omf_preinstall"
