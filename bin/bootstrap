@@ -13,14 +13,14 @@ die () {
 	exit $status
 }
 
-command_exist() {
-	which $@ > /dev/null
+is_installed() {
+	type $1 > /dev/null 2>&1
 }
 
 init () {
-	if command_exist curl; then
+	if is_installed curl; then
 		downloader='curl -L'
-	elif command_exist wget; then
+	elif is_installed wget; then
 		downloader='wget -O -'
 	else 
 		check_sudo && sudo apt-get install -y curl || die "There isn't any downloader available aborting !"
@@ -43,7 +43,7 @@ check_sudo () {
 		else
 			return 1;
 		fi
-	elif command_exist sudo; then
+	elif is_installed sudo; then
 		echo -n "Do you have admin right ? [N/y]"
 		read REPLY < /dev/tty
 		if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
@@ -56,7 +56,7 @@ check_sudo () {
 }
 
 check_git () {
-	command_exist git
+	is_installed git
 }
 
 install_git () {
