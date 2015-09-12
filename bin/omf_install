@@ -28,5 +28,5 @@ if omf_preinstall; then
 	CI=custominstall
 	$DOWNLOADER github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | sh
 else
-	die "Oh My Fish couldn't install, but you can complain here → github.com/oh-my-fish/oh-my-fish/issues"
+	die "An error occured in omf_preinstall"
 fi
