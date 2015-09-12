@@ -6,5 +6,5 @@
 #set -g theme_display_hg yes
 #set -g theme_display_virtualenv no
 set -g theme_display_ruby no
-#set -g theme_display_user yes
+set -g theme_display_user yes
 set -g default_user paul
