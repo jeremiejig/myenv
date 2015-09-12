@@ -2,6 +2,8 @@
 
 set -e
 
+. $(dirname $0)/../lib/common.sh
+
 need_version_major=2
 need_version_minor=1
 need_version_rev=0
@@ -22,25 +24,6 @@ clrpurple='\e[0;35m'
 clrcyan='\e[0;36m'
 clrwhite='\e[0;37m'
 clrend='\e[0m'
-
-init (){
-  if which curl 2> /dev/null
-  then
-    downloader='curl -L'
-  elif which wget 2> /dev/null
-  then
-    downloader='wget -O -'
-  else 
-    sudo apt-get install -y curl
-    downloader='curl -L'
-  fi
-}
-
-die (){
-  local status=$?
-  echo $@
-  exit $status
-}
 
 colored (){
   local color=$1
@@ -77,14 +60,6 @@ is_version_ok () {
       fi
     fi
     return 1
-}
-
-confirm() {
-  echo -n "Do you want to run $*? [N/y] "
-  read REPLY < /dev/tty
-  if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
-    "$@" < /dev/tty
-  fi 
 }
 
 check_and_install_fish () {
