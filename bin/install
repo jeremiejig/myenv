@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+. $(dirname $0)/../lib/common.sh
+
+PATH="$MYENV_PATH/bin:$PATH"
+
+installdebianfish && omf_install || echo Error while installing fish.
