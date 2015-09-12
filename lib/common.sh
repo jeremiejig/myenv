@@ -49,10 +49,10 @@ check_sudo () {
 }
 
 init () {
-	if which curl 2> /dev/null
+	if is_installed curl
 	then
 		DOWNLOADER='curl -L'
-	elif which wget 2> /dev/null
+	elif is_installed wget
 	then
 		DOWNLOADER='wget -O -'
 	else 
