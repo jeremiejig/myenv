@@ -2,8 +2,6 @@
 
 . $(dirname $0)/../lib/common.sh
 
-exit 0;
-
 test -z ${XDG_DATA_HOME+_}    && XDG_DATA_HOME="${HOME}/.local/share"
 test -z ${XDG_CONFIG_HOME+_}  && XDG_CONFIG_HOME="${HOME}/.config"
 
@@ -19,16 +17,16 @@ die() {
 
 omf_preinstall () {
 	mkdir -p "${OMF_CONFIG}"
-	test -f "${OMF_CONFIG}/bundle"    || ln -s 
-	test -f "${OMF_CONFIG}/theme"     || 
-	test -f "${OMF_CONFIG}/init.fish" || 
+	test -f "${OMF_CONFIG}/bundle"    || ln -s "${MYENV_PATH}/omf/config/bundle" "${OMF_CONFIG}/bundle"
+	test -f "${OMF_CONFIG}/theme"     || ln -s "${MYENV_PATH}/omf/config/" "${OMF_CONFIG}/theme"
+	test -f "${OMF_CONFIG}/init.fish" || ln -s "${MYENV_PATH}/omf/config/" "${OMF_CONFIG}/init.fish"
 }
 
 echo "Peparing local configuration of Oh My Fish..."
 if omf_preinstall; then
 	#Simuling a CI env to avoid the reloading of fish.
 	CI=custominstall
-	curl -L github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | sh
+	$DOWNLOADER github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | sh
 else
 	die "Oh My Fish couldn't install, but you can complain here → github.com/oh-my-fish/oh-my-fish/issues"
 fi
