@@ -10,5 +10,5 @@ installdebianfish && omf_install || echo Error while installing fish.
 
 # Setting up bash
 
-[ -e ~/.bashrc ] && [ ! -L ~/.bashrc ] && ln -si $MYENV_PATH/bash/bashrc ~/.bashrc
-[ -e ~/.bash_aliases ] && [ ! -L ~/.bash_aliases ] && ln -si $MYENV_PATH/bash/bash_aliases ~/.bash_aliases
+[ ! -L ~/.bashrc ] && ln -si $MYENV_PATH/bash/bashrc ~/.bashrc || :
+[ ! -L ~/.bash_aliases ] && ln -si $MYENV_PATH/bash/bash_aliases ~/.bash_aliases || :
