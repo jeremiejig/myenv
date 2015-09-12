@@ -140,7 +140,7 @@ add_repo_fish_debian () {
 
 check_and_install_git () {
   which git > /dev/null || { echo "\t\tInstalling git..." && sudo apt-get install -y git && echo "\t\tgit installed!"; }
-  [ -f ~/.gitconfig ] || $downloader http://github.com/jeremiejig/oh-my-fish/raw/jeremiejig/templates/gitconfig > ~/.gitconfig
+  [ -f ~/.gitconfig ] || $downloader http://github.com/jeremiejig/myenv/raw/master/templates/gitconfig > ~/.gitconfig
 }
 
 #colored yellow hey in yellow
