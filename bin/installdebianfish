@@ -1,4 +1,5 @@
 #!/bin/sh
+# This script need Admin right to be executed.
 
 set -e
 
@@ -74,6 +75,7 @@ check_and_install_fish () {
 }
 
 install_fish () {
+  check_sudo || die "Cannot install fish."
   echo "\t\tInstalling fish..."
   flag_install=0
   version=$(apt-cache showpkg fish | sed -re '/^Provides:/,+1!d;/Provides/d;s/^([0-9]+\.[0-9]+\.[0-9]+).*$/\1/')
