@@ -12,7 +12,6 @@ die () {
 }
 
 init () {
-	local argv1 $1
 	if which curl 2> /dev/null
 	then
 		DOWNLOADER='curl -L'
@@ -23,8 +22,8 @@ init () {
 		die "Missing a dowloader utility."
 	fi
 
-	MYENV_PATH=$(cd $(dirname $argv1) && pwd | sed 's-\(bin\|lib\)$--')
+	MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-\(bin\|lib\)$--')
 
 }
 
-init $0 "$@"
+init
