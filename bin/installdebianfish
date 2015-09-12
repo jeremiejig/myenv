@@ -113,17 +113,8 @@ add_repo_fish_debian () {
   sudo apt-get update
 }
 
-check_and_install_git () {
-  which git > /dev/null || { echo "\t\tInstalling git..." && sudo apt-get install -y git && echo "\t\tgit installed!"; }
-  [ -f ~/.gitconfig ] || $downloader http://github.com/jeremiejig/myenv/raw/master/templates/gitconfig > ~/.gitconfig
-}
-
 #colored yellow hey in yellow
 
 init
 check_and_install_fish
-check_and_install_git
-[ -d $gitglobal_path ] || mkdir $gitglobal_path
-[ -d $gitohmyfish_path ] || { echo "\t\tInstalling Oh-my-fish!" && $downloader http://github.com/jeremiejig/oh-my-fish/raw/jeremiejig/tools/jeremiejig.install.fish | fish ; } || 
-[ -f $ohmyfishinstallscript ] && fish || echo "There was an error when trying to launch $ohmyfishinstallscript"
 
