@@ -65,7 +65,7 @@ install_git () {
 }
 
 install_gitconfig () {
-	[ -f ~/.gitconfig ] || { echo "Installing ~/.gitconfig" && $downloader $MYENV_RAW/templates/gitconfig > ~/.gitconfig }
+	[ -f ~/.gitconfig ] || { echo "Installing ~/.gitconfig" && $downloader $MYENV_RAW/templates/gitconfig > ~/.gitconfig ;}
 }
 
 download_myenv () {
