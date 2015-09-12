@@ -59,7 +59,7 @@ init () {
 		die "Missing a dowloader utility."
 	fi
 
-	MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-\(bin\|lib\)$--')
+	MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
 
 }
 
