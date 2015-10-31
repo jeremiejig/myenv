@@ -12,3 +12,6 @@ installdebianfish && omf_install || echo Error while installing fish.
 
 [ ! -L ~/.bashrc ] && ln -si $MYENV_PATH/bash/bashrc ~/.bashrc || :
 [ ! -L ~/.bash_aliases ] && ln -si $MYENV_PATH/bash/bash_aliases ~/.bash_aliases || :
+
+# If SHELL Login is changed exec fish
+test $(getent passwd $USER | cut -d : -f 7) = /usr/bin/fish && SHELL=/usr/bin/fish exec fish
