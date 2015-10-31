@@ -30,7 +30,7 @@ confirm() {
 }
 
 check_sudo () {
-	if test -n ${MYENV_HAS_SUDO+_}; then
+	if test -n "${MYENV_HAS_SUDO:+_}"; then
 		if test ${MYENV_HAS_SUDO} = "1" ; then
 			return 0;
 		else
