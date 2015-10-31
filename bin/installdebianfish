@@ -71,7 +71,10 @@ check_and_install_fish () {
     version_rev=$(echo $version|sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)/\3/')
 
     is_version_ok
-  } || { install_fish && [ "/usr/bin/fish" = $SHELL ] || confirm chsh -s /usr/bin/fish;}
+  } || { install_fish && [ "/usr/bin/fish" = $SHELL ] || \
+	  { [ ${MYENV_HAS_SUDO:-_} = "1" ] && confirm sudo chsh -s /usr/bin/fish $USER \
+		  || confirm chsh -s /usr/bin/fish; }
+       }
 }
 
 install_fish () {
