@@ -37,7 +37,7 @@ confirm() {
 }
 
 check_sudo () {
-	if test -n ${HAS_SUDO+_}; then
+	if test -n "${HAS_SUDO:+_}"; then
 		if test ${HAS_SUDO} = "1" ; then
 			return 0;
 		else
