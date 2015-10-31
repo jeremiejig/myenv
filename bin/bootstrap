@@ -73,6 +73,7 @@ download_myenv () {
 	git clone $MYENV_REPO $MYENV_PATH
 }
 
+init
 download_myenv && echo "Launching install script" || die "An errored occured while cloning the MyEnv repo."
 exec sh $MYENV_PATH/bin/install
 
