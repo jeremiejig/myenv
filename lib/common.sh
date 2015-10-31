@@ -40,7 +40,7 @@ check_sudo () {
 		echo -n "Do you have admin right ? [N/y]"
 		read REPLY < /dev/tty
 		if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
-			MYENV_HAS_SUDO=1
+			export MYENV_HAS_SUDO=1
 			return 0;
 		fi
 	else
@@ -61,6 +61,10 @@ init () {
 
 	MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
 
+}
+
+cleanup () {
+	unset MYENV_HAS_SUDO
 }
 
 init
