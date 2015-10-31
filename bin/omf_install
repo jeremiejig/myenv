@@ -26,7 +26,7 @@ omf_preinstall () {
 	cd -
 }
 
-echo "Peparing local configuration of Oh My Fish..."
+echo "Preparing local configuration of Oh My Fish..."
 if omf_preinstall; then
 	#Simuling a CI env to avoid the reloading of fish.
 	CI=custominstall
