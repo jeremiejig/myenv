@@ -1,4 +1,3 @@
-theme default
 theme bobthefish
 package https://github.com/oh-my-fish/plugin-tmux
 package https://github.com/oh-my-fish/plugin-mc
