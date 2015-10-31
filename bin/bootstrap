@@ -39,7 +39,6 @@ confirm() {
 check_sudo () {
 	if test -n "${HAS_SUDO:+_}"; then
 		if test ${HAS_SUDO} = "1" ; then
-			export MYENV_HAS_SUDO=1
 			return 0;
 		else
 			return 1;
@@ -48,6 +47,7 @@ check_sudo () {
 		echo -n "Do you have admin right ? [N/y]"
 		read REPLY < /dev/tty
 		if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
+			export MYENV_HAS_SUDO=1
 			HAS_SUDO=1
 			return 0;
 		fi
