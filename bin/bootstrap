@@ -75,5 +75,5 @@ download_myenv () {
 
 init
 download_myenv && echo "Launching install script" || die "An errored occured while cloning the MyEnv repo."
-exec sh $MYENV_PATH/bin/install
+exec sh -x $MYENV_PATH/bin/install
 
