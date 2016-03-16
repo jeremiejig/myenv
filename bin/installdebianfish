@@ -96,7 +96,7 @@ add_repo_fish () {
   if [ $distrib = 'LinuxMint' ] || [ $distrib = 'Ubuntu' ]
   then
     add_repo_fish_ubuntu
-  elif [ $distrib = 'Debian' ]
+  elif [ $distrib = 'Debian' ] || [ $distrib = 'Kali' ]
   then
     debian_version=$(lsb_release -r|sed -r 's/Release:\s+//;s/^([0-9]+).*$/\1/')
     add_repo_fish_debian
