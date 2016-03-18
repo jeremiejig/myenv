@@ -8,6 +8,16 @@ PATH="$MYENV_PATH/bin:$PATH"
 
 installdebianfish && omf_install || echo Error while installing fish.
 
+_myenv_config_files=$MYENV_PATH/install/*
+
+for $install_file in $_myenv_config_files
+do
+	if [ -x $install_file ]; then
+		echo launching $install_file ...
+		$install_file || echo !!! Failed $install_file !!!
+	fi;
+done
+
 # Setting up bash
 
 [ ! -L ~/.bashrc ] && ln -si $MYENV_PATH/bash/bashrc ~/.bashrc < /dev/tty || :
