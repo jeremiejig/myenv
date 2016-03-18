@@ -22,8 +22,12 @@ is_installed() {
 }
 
 confirm() {
-	echo -n "Do you want to run $*? [N/y] "
-	read REPLY < /dev/tty
+	if [ $MYENV_UNATTENDED = "yes" ]; then
+		REPLY=y
+	else
+		echo -n "Do you want to run $*? [N/y] "
+		read REPLY < /dev/tty
+	fi;
 	if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
 		"$@" < /dev/tty
 	fi 
