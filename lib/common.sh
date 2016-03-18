@@ -64,6 +64,12 @@ init () {
 
 	export MYENV_UNATTENDED
 	export MYENV_PATH
+
+	if [ $MYENV_UNATTENDED = "yes" ] ; then
+		opt_i="-i"
+	else
+		opt_i=""
+	fi;
 }
 
 cleanup () {

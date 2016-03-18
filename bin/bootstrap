@@ -33,6 +33,9 @@ init () {
 }
 
 confirm() {
+	if test "$MYENV_UNATTENDED" = yes; then
+		"$@" < /dev/tty
+	fi
 	echo -n "Do you want to run $*? [N/y] "
 	read REPLY < /dev/tty
 	if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 

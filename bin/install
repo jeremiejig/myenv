@@ -20,8 +20,8 @@ done
 
 # Setting up bash
 
-[ ! -L ~/.bashrc ] && ln -si $MYENV_PATH/bash/bashrc ~/.bashrc < /dev/tty || :
-[ ! -L ~/.bash_aliases ] && ln -si $MYENV_PATH/bash/bash_aliases ~/.bash_aliases < /dev/tty || :
+[ ! -L ~/.bashrc ] && ln -s $opt_i $MYENV_PATH/bash/bashrc ~/.bashrc < /dev/tty || :
+[ ! -L ~/.bash_aliases ] && ln -s $opt_i $MYENV_PATH/bash/bash_aliases ~/.bash_aliases < /dev/tty || :
 
 # Checkout all submodules
 git -C $MYENV_PATH submodule update
