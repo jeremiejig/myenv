@@ -6,7 +6,7 @@ set -e
 . $(dirname $0)/../lib/common.sh
 
 need_version_major=2
-need_version_minor=1
+need_version_minor=2
 need_version_rev=0
 
 ## DO NOT EDIT BELOW
