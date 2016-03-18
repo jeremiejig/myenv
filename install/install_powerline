@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. $MYENV_PATH/lib/common.sh
+
+is_installed pip || die cannot install powerline
+pip install --user powerline-status
