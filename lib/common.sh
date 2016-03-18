@@ -59,12 +59,17 @@ init () {
 		die "Missing a dowloader utility."
 	fi
 
-	MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
+	test -z ${MYENV_PATH+_} && MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
+	test -z ${MYENV_UNATTENDED+_} && MYENV_UNATTENDED=no
 
+	export MYENV_UNATTENDED
+	export MYENV_PATH
 }
 
 cleanup () {
 	unset MYENV_HAS_SUDO
+	unset MYENV_PATH
+	unset MYENV_UNATTENDED
 }
 
 init

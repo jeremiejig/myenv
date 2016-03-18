@@ -10,7 +10,6 @@ installdebianfish && omf_install || echo Error while installing fish.
 
 _myenv_config_files=$MYENV_PATH/install/*
 
-export MYENV_PATH
 for install_file in $_myenv_config_files
 do
 	if [ -x $install_file ]; then
@@ -27,8 +26,8 @@ done
 # Checkout all submodules
 git -C $MYENV_PATH submodule update
 
-# Removing MYENV_PATH
-unset MYENV_PATH
+# Cleaning env var
+cleanup
 
 # If SHELL Login is changed exec fish
 test $(getent passwd $USER | cut -d : -f 7) = /usr/bin/fish && SHELL=/usr/bin/fish exec fish < /dev/tty

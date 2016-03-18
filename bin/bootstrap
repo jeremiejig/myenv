@@ -6,6 +6,10 @@
 test -z ${MYENV_REPO+_} && MYENV_REPO=http://github.com/jeremiejig/myenv.git
 test -z ${MYENV_PATH+_} && MYENV_PATH=~/git/myenv
 test -z ${MYENV_RAW+_} && MYENV_RAW=http://github.com/jeremiejig/myenv/raw/master
+test -z ${MYENV_UNATTENDED+_} && MYENV_UNATTENDED=no
+
+export MYENV_UNATTENDED
+export MYENV_PATH
 
 die () {
 	local status=$?
