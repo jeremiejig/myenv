@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. $MYENV_PATH/lib/common.sh
+
 [ ! -L ~/.vimrc ] && ln -s $opt_i $MYENV_PATH/vim/vimrc ~/.vimrc < /dev/tty || :
 mkdir -p ~/vim/autoload
 $DOWNLOADER https://tpo.pe/pathogen.vim > ~/vim/autoload/pathogen.vim
