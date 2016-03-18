@@ -65,9 +65,11 @@ init () {
 
 	test -z ${MYENV_PATH+_} && MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
 	test -z ${MYENV_UNATTENDED+_} && MYENV_UNATTENDED=no
+	test -z ${MYENV_DEBUG+_} && MYENV_DEBUG=no
 
 	export MYENV_UNATTENDED
 	export MYENV_PATH
+	export MYENV_DEBUG
 
 	if [ $MYENV_UNATTENDED = "yes" ] ; then
 		opt_i="-i"
@@ -83,3 +85,4 @@ cleanup () {
 }
 
 init
+[ $MYENV_DEBUG = "yes" ] && set -x || :
