@@ -10,7 +10,7 @@ installdebianfish && omf_install || echo Error while installing fish.
 
 _myenv_config_files=$MYENV_PATH/install/*
 
-for $install_file in $_myenv_config_files
+for install_file in $_myenv_config_files
 do
 	if [ -x $install_file ]; then
 		echo launching $install_file ...
