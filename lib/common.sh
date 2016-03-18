@@ -72,9 +72,9 @@ init () {
 	export MYENV_DEBUG
 
 	if [ $MYENV_UNATTENDED = "yes" ] ; then
-		opt_i="-i"
-	else
 		opt_i=""
+	else
+		opt_i="-i"
 	fi;
 }
 
