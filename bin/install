@@ -10,6 +10,7 @@ installdebianfish && omf_install || echo Error while installing fish.
 
 _myenv_config_files=$MYENV_PATH/install/*
 
+export MYENV_PATH
 for install_file in $_myenv_config_files
 do
 	if [ -x $install_file ]; then
@@ -22,6 +23,9 @@ done
 
 [ ! -L ~/.bashrc ] && ln -si $MYENV_PATH/bash/bashrc ~/.bashrc < /dev/tty || :
 [ ! -L ~/.bash_aliases ] && ln -si $MYENV_PATH/bash/bash_aliases ~/.bash_aliases < /dev/tty || :
+
+# Removing MYENV_PATH
+unset MYENV_PATH
 
 # If SHELL Login is changed exec fish
 test $(getent passwd $USER | cut -d : -f 7) = /usr/bin/fish && SHELL=/usr/bin/fish exec fish < /dev/tty
