@@ -1,3 +1,6 @@
 [submodule "vim/bundle/editorconfig-vim"]
 	path = vim/bundle/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
+[submodule "vim/bundle/shorewall.vim"]
+	path = vim/bundle/shorewall.vim
+	url = https://github.com/vim-scripts/shorewall.vim
