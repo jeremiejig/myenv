@@ -2,5 +2,5 @@
 
 . $MYENV_PATH/lib/common.sh
 
-is_installed pip || die cannot install powerline
+is_installed pip || check_sudo && sudo apt-get install -y pip || die cannot install powerline
 pip install --user powerline-status
