@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[ ! -L ~/.vimrc ] && ln -si $MYENV_PATH/vim/vimrc ~/.vimrc < /dev/tty || :
+mkdir -p ~/vim/autoload
+[ ! -L ~/vim/bundle ] && ln -si $MYENV_PATH/vim/bundle ~/vim/bundle < /dev/tty || :
