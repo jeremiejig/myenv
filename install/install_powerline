@@ -3,4 +3,6 @@
 . $MYENV_PATH/lib/common.sh
 
 is_installed pip || check_sudo && sudo apt-get install -y python-pip || die cannot install powerline
+is_installed pip3 || check_sudo && sudo apt-get install -y python-pip3 || :
 pip install --user powerline-status
+pip3 install --user powerline-status || :
