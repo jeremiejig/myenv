@@ -28,10 +28,7 @@ omf_preinstall () {
 
 echo "Preparing local configuration of Oh My Fish..."
 if omf_preinstall; then
-	#Simuling a CI env to avoid the reloading of fish.
-	CI=custominstall
-	export CI
-	$DOWNLOADER $OMF_REPO_URI/raw/$OMF_REPO_BRANCH/bin/install | fish
+	$DOWNLOADER $OMF_REPO_URI/raw/$OMF_REPO_BRANCH/bin/install | NONINTERACTIVE= fish
 else
 	die "An error occured in omf_preinstall"
 fi
