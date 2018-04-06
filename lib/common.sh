@@ -46,6 +46,9 @@ check_sudo () {
 		if test "$REPLY" = "y" -o "$REPLY" = "Y"; then 
 			export MYENV_HAS_SUDO=1
 			return 0;
+		else
+			export MYENV_HAS_SUDO=0
+			return 1;
 		fi
 	else
 		return 1;
@@ -62,6 +65,22 @@ init () {
 	else 
 		die "Missing a dowloader utility."
 	fi
+
+	# Detect Package Manager
+	if is_installed apt-get
+	then
+		PACKAGE_MANAGER='apt-get'
+	elif is_installed dnf
+	then
+		PACKAGE_MANAGER='dnf'
+	elif is_installed yum
+	then
+		PACKAGE_MANAGER='yum'
+	fi
+
+	# Load os-release
+	[ -r /etc/os-release ] && . /etc/os-release || . /usr/lib/os-release
+	OS_ID=$ID
 
 	test -z ${MYENV_PATH+_} && MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
 	test -z ${MYENV_UNATTENDED+_} && MYENV_UNATTENDED=no
