@@ -3,20 +3,29 @@ My console environment with fish, vim, tmux and others ...
 
 All automation script are POSIX Shell Compliant, the bootstrap will follow XDG.
 
-## Script dependencies
+Trying to follow KISS
 
-Basic Unix dependencies `ls, mv, cp, awk`
+## Getting started
 
-## Install
 `curl -L github.com/jeremiejig/myenv/raw/master/bin/bootstrap | sh`
 
 `wget -O - github.com/jeremiejig/myenv/raw/master/bin/bootstrap | sh`
 
-## Directory Structure
+## Project Structure
 
-Each folder is a module, `myenv` will do the heavy lifting
+### Script dependencies
 
-## Installation process of a module
+The fewer the better
+
+Basic Unix dependencies `ls, mv, cp, awk`
+
+Bootstrapping need git.
+
+### Directory Structure
+
+Each folder is a module, `myenv` will do the heavy lifting.
+
+#### Installation process of a module
 
 foreach module files the following steps are followed: 
 
@@ -41,3 +50,20 @@ template/
     └── dot.program.conf
 ```
 
+#### The *myenv* module
+
+This module will do most of the work, the goal is to have all other module with minimalist script.
+
+The myenv module will read ".config/myenv/dotfiles" to get the list of modules to install.
+
+```tree
+├── bootstrap			(Bootstrap myenv with git clone)
+├── copy
+│   └── dot.config
+│       └── myenv
+│           └── dotfiles	(Default configuration)
+├── init
+│   └── install
+└── install
+    └── install
+```
