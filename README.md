@@ -17,7 +17,7 @@ Trying to follow KISS
 
 The fewer the better
 
-Basic Unix dependencies `ls, mv, cp, awk`
+Basic Unix dependencies `ls, mv, cp, awk, sed ...` using only posix definition
 
 Bootstrapping need git.
 

@@ -1,11 +1,17 @@
-# Common function has to be sourced first in your script.
-# Will init this variable :
-# DOWNLOADER to a command
-# MYENV_PATH to the installation of MyEnv
-# MYENV_PATH_CONFIG to the configuration path of MyEnv
-# 
+# Common function
+# . $MYENV_PATH/lib/common.sh
+#
+# The entry point of myenv is in charge of initializing MYENV_PATH and MYENV_PATH_CONFIG
+#
+# DOWNLOADER		downloader utility
+# MYENV_PATH		installation path of MyEnv
+# MYENV_PATH_CONFIG	configuration path of MyEnv
+#
 # function :
 # - die
+# - e_info
+# - e_error
+# - e_warning
 # - is_installed
 # - check_sudo
 # - confirm
@@ -32,36 +38,46 @@ colored (){
   shift
   case $color in
     black)
-      echo $clrblack"$@"$clrend ;;
+      echo "$clrblack${*}$clrend" ;;
     red)
-      echo $clrred"$@"$clrend ;;
+      echo "$clrred${*}$clrend" ;;
     green)
-      echo $clrgreen"$@"$clrend ;;
+      echo "$clrgreen${*}$clrend" ;;
     blue)
-      echo $clrblue"$@"$clrend ;;
+      echo "$clrblue${*}$clrend" ;;
     yellow)
-      echo $clryellow"$@"$clrend ;;
+      echo "$clryellow${*}$clrend" ;;
     cyan)
-      echo $clrcyan"$@"$clrend ;;
+      echo "$clrcyan${*}$clrend" ;;
     purple)
-      echo $clrpurple"$@"$clrend ;;
+      echo "$clrpurple${*}$clrend" ;;
     white)
-      echo $clrwhite"$@"$clrend ;;
+      echo "$clrwhite${*}$clrend" ;;
     *)
-      echo "$@"
+      echo "${*}"
   esac
 }
 
+e_info (){
+	colored white "$@"
+}
 
+e_error (){
+	colored red "$@"
+}
+
+e_info (){
+	colored yellow "$@"
+}
 
 die () {
 	status=$?
-	echo "$@"
+	e_error "$@"
 	exit "$status"
 }
 
 is_installed() {
-	type "$1" > /dev/null 2>&1
+	command -pv "$1" > /dev/null 2>&1
 }
 
 confirm() {
@@ -125,15 +141,17 @@ init () {
 	[ -r /etc/os-release ] && . /etc/os-release || . /usr/lib/os-release
 	OS_ID="$ID"
 
-	test -z ${MYENV_PATH+_} && MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
-	test -z ${MYENV_UNATTENDED+_} && MYENV_UNATTENDED=no
-	test -z ${MYENV_DEBUG+_} && MYENV_DEBUG=no
+	#Normally already set
+	test -z ${MYENV_PATH} && MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
+	test -z ${MYENV_DEBUG} && MYENV_DEBUG=no
+	test -z ${UNATTENDED} && UNATTENDED=no
 
-	export MYENV_UNATTENDED
+	export UNATTENDED
 	export MYENV_PATH
+	export MYENV_PATH_CONFIG
 	export MYENV_DEBUG
 
-	if [ $MYENV_UNATTENDED = "yes" ] ; then
+	if [ $UNATTENDED = "yes" ] ; then
 		opt_i="-f"
 	else
 		opt_i="-i"
@@ -143,8 +161,10 @@ init () {
 cleanup () {
 	unset MYENV_HAS_SUDO
 	unset MYENV_PATH
-	unset MYENV_UNATTENDED
+	unset MYENV_PATH_CONFIG
+	unset UNATTENDED
 }
 
 init
+trap cleanup 0
 [ $MYENV_DEBUG = "yes" ] && set -x || :
