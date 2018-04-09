@@ -2,11 +2,10 @@
 
 set -e
 
-. $(dirname $0)/../lib/common.sh
+. $(dirname $0)/../../lib/common.sh
 
-PATH="$MYENV_PATH/bin:$PATH"
+PATH="$MYENV_PATH/myenv/bin:$PATH"
 
-installdebianfish && omf_install || echo Error while installing fish.
 
 _myenv_config_files=$MYENV_PATH/install/*
 

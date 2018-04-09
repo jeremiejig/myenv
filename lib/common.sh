@@ -2,6 +2,7 @@
 # Will init this variable :
 # DOWNLOADER to a command
 # MYENV_PATH to the installation of MyEnv
+# MYENV_PATH_CONFIG to the configuration path of MyEnv
 # 
 # function :
 # - die
@@ -10,15 +11,57 @@
 # - confirm
 # 
 
+IFS=' 	
+'
+export IFS
+
+#Color
+clrblack='\e[0;30m'
+clrred='\e[0;31m'
+clrgreen='\e[0;32m'
+clryellow='\e[0;33m'
+clrblue='\e[0;34m'
+clrpurple='\e[0;35m'
+clrcyan='\e[0;36m'
+clrwhite='\e[0;37m'
+clrend='\e[0m'
+
+colored (){
+  local color
+  color=$1
+  shift
+  case $color in
+    black)
+      echo $clrblack"$@"$clrend ;;
+    red)
+      echo $clrred"$@"$clrend ;;
+    green)
+      echo $clrgreen"$@"$clrend ;;
+    blue)
+      echo $clrblue"$@"$clrend ;;
+    yellow)
+      echo $clryellow"$@"$clrend ;;
+    cyan)
+      echo $clrcyan"$@"$clrend ;;
+    purple)
+      echo $clrpurple"$@"$clrend ;;
+    white)
+      echo $clrwhite"$@"$clrend ;;
+    *)
+      echo "$@"
+  esac
+}
+
+
 
 die () {
-	local status=$?
-	echo $@
-	exit $status
+	status=$?
+	echo "$@"
+	exit "$status"
 }
 
 is_installed() {
-	type $1 > /dev/null 2>&1
+	type "$1" > /dev/null 2>&1
 }
 
 confirm() {
@@ -80,7 +123,7 @@ init () {
 
 	# Load os-release
 	[ -r /etc/os-release ] && . /etc/os-release || . /usr/lib/os-release
-	OS_ID=$ID
+	OS_ID="$ID"
 
 	test -z ${MYENV_PATH+_} && MYENV_PATH=$(cd $(dirname $0) && pwd | sed 's-/\(bin\|lib\)$--')
 	test -z ${MYENV_UNATTENDED+_} && MYENV_UNATTENDED=no
